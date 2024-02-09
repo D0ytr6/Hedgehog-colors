@@ -16,13 +16,13 @@
                 return -1;
             }
 
-            var aim = GetTargetColor();
+            var targetColor = GetTargetColor();
 
             int meetings = 0;
-            int firstColor = (aim + 1) % 3;
-            int secondColor = (aim + 2) % 3;
+            int firstColor = (targetColor + 1) % 3;
+            int secondColor = (targetColor + 2) % 3;
 
-            while (hedgehogs[aim] < hedgehogs.Sum())
+            while (hedgehogs[targetColor] < hedgehogs.Sum())
             {
 
 
@@ -30,20 +30,20 @@
                 {
                     hedgehogs[firstColor]--;
                     hedgehogs[secondColor]--;
-                    hedgehogs[aim] += 2;
+                    hedgehogs[targetColor] += 2;
                 }
                 else if (hedgehogs[firstColor] == 0 && hedgehogs[secondColor] > 1)
                 {
 
                     hedgehogs[secondColor]--;
-                    hedgehogs[aim]--;
+                    hedgehogs[targetColor]--;
                     hedgehogs[firstColor] += 2;
                 }
 
                 else if (hedgehogs[firstColor] > 1 && hedgehogs[secondColor] == 0)
                 {
                     hedgehogs[firstColor]--;
-                    hedgehogs[aim]--;
+                    hedgehogs[targetColor]--;
                     hedgehogs[secondColor]++;
                 }
 
@@ -70,10 +70,10 @@
             while (true)
             {
                 Console.WriteLine("Enter target color: 0 (Red) 1 (Green) 2 (Blue)");
-                var aim = Convert.ToInt32(Console.ReadLine());
-                if (aim >= 0 && aim <= 2)
+                var target = Convert.ToInt32(Console.ReadLine());
+                if (target >= 0 && target <= 2)
                 {
-                    return aim;
+                    return target;
                 }
 
             }

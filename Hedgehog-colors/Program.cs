@@ -12,6 +12,8 @@
             InputHedgehogs("green");
             InputHedgehogs("blue");
 
+            Console.WriteLine($"Total Sum is {hedgehogs.Sum()}");
+
             if (IsOneColor())
             {
                 return -1;
@@ -39,7 +41,6 @@
                     MeetingHedgehogs(firstColor, secondColor, targetColor);
                 }
 
-                }
 
                 else if (hedgehogs[firstColor] == 0 && hedgehogs[secondColor] > 1)
                 {

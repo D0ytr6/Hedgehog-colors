@@ -3,6 +3,7 @@
     class Program
     {
         static List<int> hedgehogs = [];
+        static int meetings = 0;
 
         static int Main(string[] args)
         {
@@ -11,6 +12,8 @@
             InputHedgehogs("green");
             InputHedgehogs("blue");
 
+            Console.WriteLine($"Total Sum is {hedgehogs.Sum()}");
+
             if (IsOneColor())
             {
                 return -1;
@@ -18,33 +21,35 @@
 
             var targetColor = GetTargetColor();
 
-            int meetings = 0;
             int firstColor = (targetColor + 1) % 3;
             int secondColor = (targetColor + 2) % 3;
 
             while (hedgehogs[targetColor] < hedgehogs.Sum())
             {
-
-
-                if (hedgehogs[firstColor] > 0 && hedgehogs[secondColor] > 0)
+                if ((hedgehogs[secondColor] > 0) && hedgehogs[firstColor] > hedgehogs[secondColor])
                 {
-                    hedgehogs[firstColor]--;
-                    hedgehogs[secondColor]--;
-                    hedgehogs[targetColor] += 2;
+                    ShortHedgehogs(firstColor, secondColor, targetColor);
                 }
+
+                else if ((hedgehogs[firstColor] > 0) && hedgehogs[secondColor] > hedgehogs[firstColor])
+                {
+                    ShortHedgehogs(secondColor, firstColor, targetColor);
+                }
+
+                else if (hedgehogs[firstColor] > 0 && hedgehogs[secondColor] > 0)
+                {
+                    MeetingHedgehogs(firstColor, secondColor, targetColor);
+                }
+
+
                 else if (hedgehogs[firstColor] == 0 && hedgehogs[secondColor] > 1)
                 {
-
-                    hedgehogs[secondColor]--;
-                    hedgehogs[targetColor]--;
-                    hedgehogs[firstColor] += 2;
+                    AdditionalMeetingHedgehogs(firstColor, secondColor, targetColor);
                 }
 
                 else if (hedgehogs[firstColor] > 1 && hedgehogs[secondColor] == 0)
                 {
-                    hedgehogs[firstColor]--;
-                    hedgehogs[targetColor]--;
-                    hedgehogs[secondColor]++;
+                    AdditionalMeetingHedgehogs(secondColor, firstColor, targetColor);
                 }
 
                 else if ((hedgehogs[firstColor] == 1 && hedgehogs[secondColor] == 0) ||
@@ -53,8 +58,7 @@
                     break;
 
                 }
-                meetings++;
-
+               
             }
 
             Console.WriteLine($"Total meetings is {meetings}");
@@ -62,6 +66,33 @@
 
             return meetings;
 
+        }
+
+        private static void MeetingHedgehogs(int first_color, int second_color, int target_color) {
+            hedgehogs[first_color]--;
+            hedgehogs[second_color]--;
+            hedgehogs[target_color] += 2;
+            meetings++;
+        }
+
+        private static void AdditionalMeetingHedgehogs(int empty_color, int exist_color, int target_color) {
+
+            hedgehogs[exist_color]--;
+            hedgehogs[target_color]--;
+            hedgehogs[empty_color] += 2;
+            meetings++;
+
+        }
+
+        private static void ShortHedgehogs(int long_color, int short_color, int target_color)
+        {
+
+            var remainder = hedgehogs[long_color] - hedgehogs[short_color];
+            meetings += hedgehogs[short_color];
+            hedgehogs[target_color] += hedgehogs[short_color] * 2;
+            hedgehogs[long_color] = remainder;
+            hedgehogs[short_color] = 0;
+           
         }
 
         private static int GetTargetColor()

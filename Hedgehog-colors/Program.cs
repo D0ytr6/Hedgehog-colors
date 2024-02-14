@@ -27,35 +27,26 @@
                 if ((hedgehogs[secondColor] > 0) && hedgehogs[firstColor] > hedgehogs[secondColor])
                 {
                     ShortHedgehogs(firstColor, secondColor, targetColor);
-                    continue;
                 }
 
                 else if ((hedgehogs[firstColor] > 0) && hedgehogs[secondColor] > hedgehogs[firstColor])
                 {
                     ShortHedgehogs(secondColor, firstColor, targetColor);
-                    continue;
                 }
 
                 else if (hedgehogs[firstColor] > 0 && hedgehogs[secondColor] > 0)
                 {
-                    hedgehogs[firstColor]--;
-                    hedgehogs[secondColor]--;
-                    hedgehogs[targetColor] += 2;
+                    MeetingHedgehogs(firstColor, secondColor, targetColor);
                 }
 
                 else if (hedgehogs[firstColor] == 0 && hedgehogs[secondColor] > 1)
                 {
-
-                    hedgehogs[secondColor]--;
-                    hedgehogs[targetColor]--;
-                    hedgehogs[firstColor] += 2;
+                    AdditionalMeetingHedgehogs(firstColor, secondColor, targetColor);
                 }
 
                 else if (hedgehogs[firstColor] > 1 && hedgehogs[secondColor] == 0)
                 {
-                    hedgehogs[firstColor]--;
-                    hedgehogs[targetColor]--;
-                    hedgehogs[secondColor]++;
+                    AdditionalMeetingHedgehogs(secondColor, firstColor, targetColor);
                 }
 
                 else if ((hedgehogs[firstColor] == 1 && hedgehogs[secondColor] == 0) ||
@@ -64,14 +55,29 @@
                     break;
 
                 }
-                meetings++;
-
+               
             }
 
             Console.WriteLine($"Total meetings is {meetings}");
             Console.WriteLine($"Total hedgehogs {hedgehogs[0]} {hedgehogs[1]} {hedgehogs[2]}");
 
             return meetings;
+
+        }
+
+        private static void MeetingHedgehogs(int first_color, int second_color, int target_color) {
+            hedgehogs[first_color]--;
+            hedgehogs[second_color]--;
+            hedgehogs[target_color] += 2;
+            meetings++;
+        }
+
+        private static void AdditionalMeetingHedgehogs(int empty_color, int exist_color, int target_color) {
+
+            hedgehogs[exist_color]--;
+            hedgehogs[target_color]--;
+            hedgehogs[empty_color] += 2;
+            meetings++;
 
         }
 

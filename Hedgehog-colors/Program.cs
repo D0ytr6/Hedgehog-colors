@@ -39,6 +39,8 @@
                     MeetingHedgehogs(firstColor, secondColor, targetColor);
                 }
 
+                }
+
                 else if (hedgehogs[firstColor] == 0 && hedgehogs[secondColor] > 1)
                 {
                     AdditionalMeetingHedgehogs(firstColor, secondColor, targetColor);
